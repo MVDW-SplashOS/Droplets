@@ -1,13 +1,13 @@
 import sys
 
 bas_version="0.0.1 in-dev"
-
+bas_lang = "en-US"
 
 def main(argv):
 	operation=argv[0]
 	match operation:
 		case "-h" | "--help" | "help" | "h":
-			print("WIP")
+			print_help()
 		case "-v" | "--version" | "version" | "v":
 			print(f"{color.HEADER} > BAS version {bas_version} {color.ENDC}")
 		case "-i" | "--install" | "install" | "i":
@@ -15,9 +15,11 @@ def main(argv):
 		case _:
 			print("Unknown argument, please do `bas --help` for help")
 	
-	
-	
-	
+def print_help():
+	doc_help_file=open("./lang/" + bas_lang + "/doc_help.txt", 'r')
+	doc_help_content = doc_help_file.read()
+	print(doc_help_content)
+	doc_help_file.close()
 	
 class color:
 	HEADER = '\033[94m'

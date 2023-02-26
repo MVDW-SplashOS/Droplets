@@ -1,0 +1,13 @@
+Usage: bas <command> [options]
+
+Commands:
+  install		Install packages.
+  remove		Uninstall packages.
+  list			List installed packages.
+  update		Update all installed packages.
+  repo			Options for managing repositorys.
+  
+repo options:
+  add			Add a repository.
+  remove		Remove a repository.
+  list			List all repositorys installed.
