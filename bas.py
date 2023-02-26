@@ -1,4 +1,5 @@
-import sys
+import sys, os
+
 
 bas_version="0.0.1 in-dev"
 bas_lang = "en-US"
@@ -16,11 +17,15 @@ def main(argv):
 			print("Unknown argument, please do `bas --help` for help")
 	
 def print_help():
-	doc_help_file=open("./lang/" + bas_lang + "/doc_help.txt", 'r')
+	doc_help_path=resolve_path("lang/" + bas_lang + "/doc_help.txt")
+	doc_help_file=open(doc_help_path, 'r')
 	doc_help_content = doc_help_file.read()
 	print(doc_help_content)
 	doc_help_file.close()
-	
+
+def resolve_path(path):
+	return os.path.join(os.path.abspath(os.path.dirname(__file__)), path)
+
 class color:
 	HEADER = '\033[94m'
 	OKBLUE = '\033[94m'

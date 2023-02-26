@@ -1,4 +1,4 @@
 #!/bin/bash
-pyinstaller -F bas.py
+pyinstaller -F --add-data "./include:." bas.py 
 echo "--------------"
 echo "output in: $(pwd)/dist" 
