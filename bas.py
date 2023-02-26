@@ -1,9 +1,12 @@
 import sys, os
 import json
+import requests
 
-bas_version="0.0.1 in-dev"
+bas_version = "0.0.1 in-dev"
 bas_lang = "en-US"
-command_type=""
+command_type = ""
+
+repositories = ["https://www.enthix.net/SplashOS/repo", "https://www.enthix.net/SplashOS/repo2", "https://www.enthix.net/SplashOS/repo3"]
 
 def main(argv):
 	if(len(argv) == 0):
@@ -20,7 +23,7 @@ def main(argv):
 		case "-v" | "--version" | "version" | "v":
 			print(f"{color.HEADER} > BAS version {bas_version} {color.ENDC}")
 		case "-i" | "--install" | "install" | "i":
-			print("WIP")
+			install(argv)
 		case _:
 			print("Unknown argument, please do `bas --help` for help")
 	
@@ -57,6 +60,20 @@ def create_config():
 	config_file.write(default_config_content)
 	config_file.close()
 	default_config_file.close()
+
+
+
+def install(args):
+	print(f"{color.HEADER}[🔍] Searching repositories for package '{args[1]}'");
+	i = 0
+	for repo in repositories:
+		i = i + 1
+		repo_info = requests.get(repo)
+		symbol = "┣━"
+		if i == len(repositories):
+			symbol = "┗━"
+		print(f"     {symbol} Checking {repo_info.json()['NAME']}.")
+
 
 class color:
 	HEADER = '\033[94m'
