@@ -1,11 +1,13 @@
 import sys, os
 import json
 import requests
+import whois
 
 bas_version = "0.0.1 in-dev"
 bas_lang = "en-US"
 command_type = ""
 
+#repositories = ["https://www.enthix.net/SplashOS/repo", "https://www.sdsadasdasasfdgfsasd.nl", "https://www.enthix.net/aaaaaa",  "https://www.watchcreo.com", "https://www.enthix.net/SplashOS/repo2", "https://www.enthix.net/SplashOS/repo3"]
 repositories = ["https://www.enthix.net/SplashOS/repo", "https://www.enthix.net/SplashOS/repo2", "https://www.enthix.net/SplashOS/repo3"]
 
 def main(argv):
@@ -68,12 +70,36 @@ def install(args):
 	i = 0
 	for repo in repositories:
 		i = i + 1
-		repo_info = requests.get(repo)
+
+		#try :
+			#whois.whois(repo)
+			
+		#except (whois.parser.PywhoisError):
+		#	print(f"{color.FAIL}ERROR: The repo domain '{repo}' does not exist, please check configuration for any typos in the domain name.{color.ENDC}")
+		#	sys.exit(os.EX_NOHOST)
+
+		repo_info = requests.get(repo, timeout=10)
+
 		symbol = "┣━"
 		if i == len(repositories):
 			symbol = "┗━"
-		print(f"     {symbol} Checking {repo_info.json()['NAME']}.")
 
+		if repo_info.status_code == 200:
+
+			print(f"     {symbol} Checking {repo_info.json()['NAME']}.")
+		else:
+			print(f"     {symbol} Something went wrong checking repo {repo}")
+
+
+
+
+
+def check_domain_exists(domain):
+    try:
+        response = requests.head(f'{domain}')
+        return response.status_code == 200
+    except requests.ConnectionError:
+        return False
 
 class color:
 	HEADER = '\033[94m'
